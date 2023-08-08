@@ -14,7 +14,7 @@ always  @(op1,op2,alu_sel)    begin
         4'b0001:result  <=  op1 | op2;
         4'b0010:result  <=  op1 + op2;
         4'b0110:result  <=  op1 - op2;
-        default:result  <=  0;
+        default:result  <=  op1;
     endcase
 end
 

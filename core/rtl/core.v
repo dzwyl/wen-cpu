@@ -27,8 +27,10 @@ wire    [63:0]  result;
 wire    [3:0]   inst_alu;
 wire    [63:0]  
 
-
+assign  pc_inc  =   pc + 1;
 assign  pc_sel  =   branch  &   zero;
+assign  pc_target   =   pc  +   {inst64[8:0],1'b0};
+assign  pc_next =   pc_sel  ?   pc_target   :   pc_inc;
 
 
 inst_mem    u_inst_mem(

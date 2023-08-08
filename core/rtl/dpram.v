@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-module  dpram#(
+module  dpram #(
     parameter WIDTH=32,
     parameter DEPTH=1024
 )   (
@@ -10,7 +10,7 @@ module  dpram#(
     input       [clog2(DEPTH)-1:0]  addra,
     input       [WIDTH-1:0]         dina,
     input       [clog2(DEPTH)-1:0]  addrb,
-    input       [WIDTH-1:0]         dout
+    input       [WIDTH-1:0]         doutb
 );
 
 reg [WIDTH-1:0] BRAM [clog2(DEPTH)-1:0];

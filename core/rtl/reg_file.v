@@ -1,8 +1,8 @@
 `timescale 1ns/1ps
 
 module  reg_file(
-    input   clk,
-    input   rstn,
+    input           clk,
+    input           rstn,
     input   [4:0]   r_reg1,
     input   [4:0]   r_reg2,
     input   [4:0]   w_reg,

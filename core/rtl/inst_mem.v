@@ -9,12 +9,12 @@ module inst_memory(
 dpram #(
     .WIDTH(32),
     .DEPTH(256)
-)   inst_memory(
+)   u_inst_dpram(
     .clk(clk),
-    .w_en(1'b0),
+    .wen(1'b0),
     .addra(8'b0),
     .dina(32'b0),
-    .renb(1'b1),
+    .ren(1'b1),
     .addrb(pc[9:2]),
     .doutb(inst)
 );

@@ -10,17 +10,17 @@ module  data_mem(
     output  [63:0]  r_data
 );
 
-data_path   #(
+dpram   #(
     .WIDTH(64),
     .DEPTH(4096)
-)   data_mem(
+)   u_data_dpram(
     .clk(clk),
     .wen(w_en),
     .addra(addr),
     .dina(w_data),
-    .ren(rd_en),
-    .addr(addr),
-    .dout(r_data)
+    .ren(r_en),
+    .addrb(addr),
+    .doutb(r_data)
 );
 
 endmodule
