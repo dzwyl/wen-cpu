@@ -22,9 +22,15 @@ always @(posedge clk) begin
     end
 end
 
-always  @(*)    begin
-    r_data1 <=  mem[r_reg1];
-    r_data2 <=  mem[r_reg2];
+always  @(posedge clk or negedge rstn)    begin
+    if(!rstn)   begin
+        r_data1 <=  'd0;
+        r_data2 <=  'd0;
+    end
+    else    begin
+        r_data1 <=  mem[r_reg1];
+        r_data2 <=  mem[r_reg2];
+    end
 end
 
 integer i;
