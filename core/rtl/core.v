@@ -27,7 +27,7 @@ wire    [63:0]  result;
 wire    [3:0]   inst_alu;
 wire    [63:0]  r_data_mem;
 
-wire            beanch;
+wire            branch;
 wire            mem_read;
 wire            mem_to_reg;
 wire    [1:0]   aluop;
@@ -58,7 +58,7 @@ end
 assign  op1 =   r_data1_rf;
 assign  op2 =   alu_src ?   inst64  :   r_data2_rf;
 assign  inst_alu    =   {inst_reg[30],inst_reg[14:12]};     //
-assign  w_data_rf  =   mem_to_reg ? mem_dout : result;
+assign  w_data_rf  =   mem_to_reg ? r_data_mem : result;
 
 always @(posedge clk or negedge rstn) begin
     if(!rstn) begin

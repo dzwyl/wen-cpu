@@ -25,7 +25,7 @@ initial begin
 end
 
 initial begin
-    $readmemb("../bench/inst.txt",u_core.u_inst_mem.u_dpram.BRAM);
+    $readmemb("../bench/inst.txt",u_core.u_inst_mem.u_inst_dpram.BRAM);
 end
 
 core    u_core(
