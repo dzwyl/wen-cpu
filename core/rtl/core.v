@@ -25,20 +25,67 @@ wire            zero;
 wire    [63:0]  result;
 
 wire    [3:0]   inst_alu;
-wire    [63:0]  
+wire    [63:0]  r_data_mem;
+
+wire            beanch;
+wire            mem_read;
+wire            mem_to_reg;
+wire    [1:0]   aluop;
+wire            mem_write;
+wire            alu_src;
+wire            reg_write;
+
+reg     [3:0]   phase   =   4'd0;
+reg             PC_load;
+reg             IR_load;
 
 assign  pc_inc  =   pc + 1;
 assign  pc_sel  =   branch  &   zero;
 assign  pc_target   =   pc  +   {inst64[8:0],1'b0};
 assign  pc_next =   pc_sel  ?   pc_target   :   pc_inc;
 
+always @(posedge clk or negedge rstn) begin
+    if(!rstn) begin
+        pc  <= 'd0;
+    end 
+    else begin
+    if(PC_load) begin
+        pc  <= pc_next;
+    end
+    end
+end
 
-inst_mem    u_inst_mem(
-    .clk(clk),
-    .pc(pc),
-    .inst(inst)
-);
+assign  op1 =   r_data1_rf;
+assign  op2 =   alu_src ?   inst64  :   r_data2_rf;
+assign  inst_alu    =   {inst_reg[30],inst_reg[14:12]};     //
+assign  w_data_rf  =   mem_to_reg ? mem_dout : result;
 
+always @(posedge clk or negedge rstn) begin
+    if(!rstn) begin
+        phase   <= 'd0;
+    end 
+    else begin
+        phase   <= phase + 1;
+    end
+end
+
+always @(posedge clk) begin
+    if(phase==1) begin
+        PC_load <= 1'b1;
+    end 
+    else begin
+        PC_load <= 1'b0;
+    end
+end
+
+always @(posedge clk) begin
+    if(phase==2) begin
+        IR_load <= 1'b1;
+    end 
+    else begin
+        IR_load <= 1'b0;
+    end
+end
 
 always @(posedge clk or negedge rstn) begin
     if(!rstn) begin
@@ -52,6 +99,12 @@ always @(posedge clk or negedge rstn) begin
 end
 
 //-----------------------------------------------------//
+
+inst_mem    u_inst_mem(
+    .clk(clk),
+    .pc(pc),
+    .inst(inst)
+);
 
 ctrl    u_ctrl(
     .rstn(rstn),
@@ -71,10 +124,10 @@ reg_file    u_reg_file(
     .r_reg1(inst_reg[19:15]),
     .r_reg2(inst_reg[24:20]),
     .w_reg(inst_reg[11:7]),
-    .w_data(w_data),
+    .w_data(w_data_rf),
     .w_en(reg_write),
-    .r_data1(r_data1),
-    .r_data2(r_data2)
+    .r_data1(r_data1_rf),
+    .r_data2(r_data2_rf)
 );
 
 imm_gen u_imm_gen(
@@ -101,8 +154,8 @@ data_mem    u_data_mem(
     .addr(result[11:0]),
     .w_en(mem_write),
     .r_en(mem_read),
-    .w_data(r_data2),
-    .r_data(mem_dout)
+    .w_data(r_data2_rf),
+    .r_data(r_data_mem)
 );
 
 endmodule
