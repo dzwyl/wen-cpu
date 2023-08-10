@@ -2,7 +2,7 @@
 
 module inst_memory(
     input             clk,
-    input   [63:0]    pc,
+    input   [9:0]     pc,
     output  [31:0]    inst
 );
 
@@ -15,7 +15,7 @@ dpram #(
     .addra(8'b0),
     .dina(32'b0),
     .ren(1'b1),
-    .addrb(pc[9:2]),
+    .addrb(pc),
     .doutb(inst)
 );
 

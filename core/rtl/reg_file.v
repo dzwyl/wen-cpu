@@ -16,7 +16,7 @@ module  reg_file(
 reg [63:0]  mem [31:0];
 
 always @(posedge clk) begin
-    if(w_en && (w_reg!=0))   
+    if(w_en)   
     begin
         mem[w_reg]  <=  w_data;
     end
