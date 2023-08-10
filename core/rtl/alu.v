@@ -3,7 +3,7 @@
 module  alu(
     input   [63:0]      op1,
     input   [63:0]      op2,
-    input   [3::0]      alu_sel,
+    input   [3:0]      alu_sel,
     output              zero,
     output  reg [63:0]  result
 );

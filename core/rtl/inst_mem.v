@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-module inst_memory(
+module inst_mem(
     input             clk,
     input   [9:0]     pc,
     output  [31:0]    inst
