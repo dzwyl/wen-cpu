@@ -12,7 +12,7 @@ dpram #(
 )   u_inst_dpram(
     .clk(clk),
     .wen(1'b0),
-    .addra(8'b0),
+    .addra(10'b0),
     .dina(32'b0),
     .ren(1'b1),
     .addrb(pc),
