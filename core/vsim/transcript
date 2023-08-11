@@ -20,16 +20,16 @@
 # vmap -modelsim_quiet work work 
 # Modifying W:\Modelsim\vivado_2018_lib\modelsim.ini
 # Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
-# Start time: 09:42:31 on Aug 10,2023
+# Start time: 11:00:46 on Aug 10,2023
 # vlog -reportprogress 300 -work work ../bench/tb_core.v 
 # -- Compiling module tb_core
 # 
 # Top level modules:
 # 	tb_core
-# End time: 09:42:31 on Aug 10,2023, Elapsed time: 0:00:00
+# End time: 11:00:46 on Aug 10,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
-# Start time: 09:42:32 on Aug 10,2023
+# Start time: 11:00:46 on Aug 10,2023
 # vlog -reportprogress 300 -work work ../rtl/alu.v ../rtl/alu_ctrl.v ../rtl/core.v ../rtl/ctrl.v ../rtl/data_mem.v ../rtl/dpram.v ../rtl/imm_gen.v ../rtl/inst_mem.v ../rtl/reg_file.v 
 # -- Compiling module alu
 # -- Compiling module alu_ctrl
@@ -38,21 +38,37 @@
 # -- Compiling module data_mem
 # -- Compiling module dpram
 # -- Compiling module imm_gen
-# -- Compiling module inst_memory
+# -- Compiling module inst_mem
 # -- Compiling module reg_file
 # 
 # Top level modules:
 # 	core
-# 	inst_memory
-# End time: 09:42:32 on Aug 10,2023, Elapsed time: 0:00:00
+# End time: 11:00:46 on Aug 10,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vsim -do "sim.do" 
-# Start time: 09:42:32 on Aug 10,2023
-# ** Note: (vsim-3812) Design is being optimized...
+# Start time: 11:00:47 on Aug 10,2023
+# ** Note: (vsim-8009) Loading existing optimized design _opt
 # 
-# ** Error: ../rtl/core.v(103): Module 'inst_mem' is not defined.
-# Optimization failed
-# Error loading design
-# Error: Error loading design
-#        Pausing macro execution
-# MACRO ./sim.do PAUSED at line 17
+# Loading work.tb_core(fast)
+# Loading work.core(fast)
+# Loading work.inst_mem(fast)
+# Loading work.dpram(fast)
+# Loading work.ctrl(fast)
+# Loading work.reg_file(fast)
+# Loading work.imm_gen(fast)
+# Loading work.alu(fast)
+# Loading work.alu_ctrl(fast)
+# Loading work.data_mem(fast)
+# Loading work.dpram(fast__1)
+# ** Warning: (vsim-3015) ../rtl/inst_mem.v(12): [PCDPC] - Port size (8) does not match connection size (10) for port 'addrb'. The port definition is at: ../rtl/dpram.v(12).
+#    Time: 0 ns  Iteration: 0  Instance: /tb_core/u_core/u_inst_mem/u_inst_dpram File: ../rtl/dpram.v
+# ** Warning: (vsim-PLI-3003) ../bench/tb_core.v(23): [TOFD] - System task or function '$fsdbDumpfile' is not defined.
+#    Time: 0 ns  Iteration: 0  Instance: /tb_core File: ../bench/tb_core.v
+# ** Warning: (vsim-PLI-3003) ../bench/tb_core.v(24): [TOFD] - System task or function '$fsdbDumpvars' is not defined.
+#    Time: 0 ns  Iteration: 0  Instance: /tb_core File: ../bench/tb_core.v
+# ** Error (suppressible): (vsim-12023) ../bench/tb_core.v(23): Cannot execute undefined system task/function '$fsdbDumpfile'
+# 
+# ** Error (suppressible): (vsim-12023) ../bench/tb_core.v(24): Cannot execute undefined system task/function '$fsdbDumpvars'
+# 
+# End time: 12:57:04 on Aug 10,2023, Elapsed time: 1:56:17
+# Errors: 2, Warnings: 3

@@ -8,8 +8,17 @@ z2
 !i10f 100
 cModel Technology
 Z0 dW:/wen-cpu/core/vsim
+T_opt
+!s110 1691632474
+V_h7clQcJ9>1l;gP`U6KOa1
+04 7 4 work tb_core fast 0
+=1-b025aa2458c7-64d4435a-193-3608
+o-quiet -auto_acc_if_foreign -work work +acc
+n@_opt
+OL;O;10.4;61
+R0
 valu
-Z1 !s110 1691631752
+Z1 !s110 1691636446
 !i10b 1
 !s100 UmVT4MgQb<Y@Y=DFY:l8Q2
 IkacKlgF`bXOf3G^i?:VlL2
@@ -23,7 +32,7 @@ Z3 OL;L;10.4;61
 r1
 !s85 0
 31
-Z4 !s108 1691631752.172000
+Z4 !s108 1691636446.902000
 Z5 !s107 ../rtl/reg_file.v|../rtl/inst_mem.v|../rtl/imm_gen.v|../rtl/dpram.v|../rtl/data_mem.v|../rtl/ctrl.v|../rtl/core.v|../rtl/alu_ctrl.v|../rtl/alu.v|
 Z6 !s90 -reportprogress|300|-work|work|../rtl/alu.v|../rtl/alu_ctrl.v|../rtl/core.v|../rtl/ctrl.v|../rtl/data_mem.v|../rtl/dpram.v|../rtl/imm_gen.v|../rtl/inst_mem.v|../rtl/reg_file.v|
 !i113 0
@@ -148,22 +157,42 @@ R5
 R6
 !i113 0
 R7
-vinst_memory
+vinst_mem
 R1
 !i10b 1
-!s100 SWHbiZ:LBDC?30gE9;iii3
-I?N_;?V79`MTz5>_7BVD1T2
+!s100 <HT3A@[i25XN8CNfDUVBW0
+IOgoWOm3B_8<cb0WZ:EH^o2
 R2
 R0
-w1691629429
-8../rtl/inst_mem.v
-F../rtl/inst_mem.v
+w1691631776
+Z9 8../rtl/inst_mem.v
+Z10 F../rtl/inst_mem.v
 L0 3
 R3
 r1
 !s85 0
 31
 R4
+R5
+R6
+!i113 0
+R7
+vinst_memory
+!s110 1691631752
+!i10b 1
+!s100 SWHbiZ:LBDC?30gE9;iii3
+I?N_;?V79`MTz5>_7BVD1T2
+R2
+R0
+w1691629429
+R9
+R10
+L0 3
+R3
+r1
+!s85 0
+31
+!s108 1691631752.172000
 R5
 R6
 !i113 0
@@ -189,7 +218,7 @@ R6
 !i113 0
 R7
 vtb_core
-!s110 1691631751
+R1
 !i10b 1
 !s100 9I?dAHd^zKOac`fKoCom51
 IE<:iM=G[^`kQ81WiFU9f_2
@@ -203,7 +232,7 @@ R3
 r1
 !s85 0
 31
-!s108 1691631751.982000
+!s108 1691636446.778000
 !s107 ../bench/tb_core.v|
 !s90 -reportprogress|300|-work|work|../bench/tb_core.v|
 !i113 0
