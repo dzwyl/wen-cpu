@@ -1,9 +1,10 @@
+`timescale 1ns/1ps
+
 //4个fifo,每个fifo有独立的读写控制信号,空满信号
-`timescale 1ns/10ps
 
 module channel(
     input clk,
-    input rst,
+    input rstn,
 
     input clr_0,
     input wr_0,
@@ -40,7 +41,7 @@ module channel(
 
 fifo u0_fifo (
     .clk    (clk),
-    .rst    (rst),
+    .rstn   (rstn),
     .clear  (clr_0),
     .wr     (wr_0),
     .rd     (rd_0),
@@ -52,7 +53,7 @@ fifo u0_fifo (
 
 fifo u1_fifo (
     .clk    (clk),
-    .rst    (rst),
+    .rstn   (rstn),
     .clear  (clr_1),
     .wr     (wr_1),
     .rd     (rd_1),
@@ -64,7 +65,7 @@ fifo u1_fifo (
 
 fifo u2_fifo (
     .clk    (clk),
-    .rst    (rst),
+    .rstn   (rstn),
     .clear  (clr_2),
     .wr     (wr_2),
     .rd     (rd_2),
@@ -76,7 +77,7 @@ fifo u2_fifo (
 
 fifo u3_fifo (
     .clk    (clk),
-    .rst    (rst),
+    .rstn   (rstn),
     .clear  (clr_3),
     .wr     (wr_3),
     .rd     (rd_3),

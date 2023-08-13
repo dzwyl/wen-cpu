@@ -1,7 +1,9 @@
-`timescale 1ns / 10ps
+`timescale 1ns / 1ps
+
+
 module ahb_ctrl(
     input clk,
-    input rst,
+    input rstn,
     input wr,
     input rd,
     input [31:0]addr,
@@ -9,6 +11,7 @@ module ahb_ctrl(
 
     output [31:0]rdata,
     output rd_en,
+
     output hsel,
 //  output hready,
     output [1:0]htrans,
@@ -26,94 +29,95 @@ parameter IDLE = 3'b001;
 parameter S0 = 3'b010;
 parameter S1 = 3'b100; 
 
-reg [2:0] c_state;
-reg [2:0] n_state;
+reg [2:0] cs;
+reg [2:0] ns;
 
-reg [31:0] addr_d;
-reg [31:0] data_1d;
-reg wr_d ;
-reg wr_2d;
-reg rd_d ;
-reg rd_2d;
+reg [31:0] addr_reg;
+reg [31:0] wdata_reg;
+reg wr_reg ;
+reg wr_reg2;
+reg rd_reg ;
+reg rd_reg2;
 
-always @(posedge clk or negedge rst) begin
-    if(!rst) 
-        c_state <= IDLE;
+always @(posedge clk or negedge rstn) begin
+    if(!rstn) 
+        cs <= IDLE;
     else 
-        c_state <= n_state;
+        cs <= ns;
 end
 
 always @(*) begin           //状态机
-    case (c_state)
+    case (cs)
         IDLE : begin
             if(wr||rd)begin
-                n_state = S0;            //读或写有效
+                ns = S0;            //读或写有效
             end 
             else begin
-                n_state = IDLE;
+                ns = IDLE;
             end
             end
         S0 : begin
-            n_state = S1;                //自动跳转
+            ns = S1;                //自动跳转
             end
         S1 :begin
                 if(hreadyin==1'b1 && (wr||rd))      
-                    n_state = S0;
+                    ns = S0;
                 else if(hreadyin==1'b1)
-                    n_state = IDLE;
+                    ns = IDLE;
                 else 
-                    n_state = S1;        //hready信号没来 保持
+                    ns = S1;        //hready信号没来 保持
             end
-        default: n_state = IDLE ;
+        default: ns = IDLE ;
     endcase
 end
 
-always@(posedge clk or negedge rst) begin 
-    if (!rst) begin
-        wr_d <= 1'b0;
-        wr_2d <= 1'b0;
-        rd_d <= 1'b0;
-        rd_2d<= 1'b0;
+always@(posedge clk or negedge rstn) begin 
+    if (!rstn) begin
+        wr_reg <= 1'b0;
+        wr_reg2 <= 1'b0;
+        rd_reg <= 1'b0;
+        rd_reg2<= 1'b0;
     end else begin
-        wr_d <= wr;
-        rd_d <= rd;
-        wr_2d <=wr_d;
-        rd_2d<= rd_d;
+        wr_reg <= wr;
+        rd_reg <= rd;
+        wr_reg2 <=wr_reg;
+        rd_reg2<= rd_reg;
     end
 end
 
-always@(posedge clk or negedge rst) begin 
-        if(!rst) begin
-            addr_d<=32'h0;
+always@(posedge clk or negedge rstn) begin 
+        if(!rstn) begin
+            addr_reg<=32'h0;
         end else if(wr || rd) begin
-            addr_d<=addr;
+            addr_reg<=addr;
         end
 end
 
-always@(posedge clk or negedge rst) begin 
-    if(!rst) begin
-        data_1d<=32'h0;
+always@(posedge clk or negedge rstn) begin 
+    if(!rstn) begin
+        wdata_reg<=32'h0;
     end else if(wr) begin 
-        data_1d<=wdata;
+        wdata_reg<=wdata;
     end
 end
 
-assign hsel = (c_state==S0)||(c_state==S1 &&(wr_d || rd_d)) ;
-assign htrans = ( hsel == 1'b1 )? 2'h2:2'h0;
-assign hsize = ( hsel == 1'b1 )? 2'h2:2'h0;
-assign hwrite =wr_d ;
-assign haddr = ( hsel == 1'b1 )?addr_d:32'h0;
+assign hsel = (cs==S0)||(cs==S1 &&(wr_reg || rd_reg)) ;
+assign htrans = ( hsel == 1'b1 )? 2'h2:2'h0;                    // 00 BUSY 10 SEQ
+assign hsize = ( hsel == 1'b1 )? 2'h2:2'h0;                     // 10 32bit
+assign hwrite =wr_reg ;
+assign haddr = ( hsel == 1'b1 )?addr_reg:32'h0;
 
-always@(posedge clk or negedge rst) begin
-    if(!rst) begin
+always@(posedge clk or negedge rstn) begin
+    if(!rstn) begin
         hwdata<=32'h0;
     end else if(hsel) begin 
-        hwdata<=data_1d;
+        hwdata<=wdata_reg;
     end 
 end 
 
-assign rd_en = c_state == S1 && hreadyin==1'b1&& (rd_2d);
-//assign rd_en = c_state == S1 && hreadyin==1'b1&& (~wr_d);
+
+assign rd_en = cs == S1 && hreadyin==1'b1&& (rd_reg2);
+//assign rd_en = cs == S1 && hreadyin==1'b1&& (~wr_reg);
 assign rdata = (rd_en == 1'b1 ) ? hrdata : 32'h0; 
 
 endmodule

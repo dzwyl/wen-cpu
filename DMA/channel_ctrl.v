@@ -2,7 +2,7 @@
 
 module channel_ctrl(
     input clk,
-    input rst,
+    input rstn,
 
     input req_0,
     input req_1,
@@ -167,8 +167,8 @@ assign peri_t0_req =(req_0 && ch0_t0_en && fifo_0_empty==0) ||//fifo is not empt
                     (req_3 && ch3_t0_en && fifo_3_empty==0) ;
 assign mem_t0_req=(ch0_t0_en | ch1_t0_en | ch2_t0_en | ch3_t0_en ) && (~t0_done);  //存储器请求信号
 
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         s0_cs<=S0_IDLE;
     else 
         s0_cs<=s0_ns;
@@ -201,37 +201,37 @@ always @(*)
         default : s0_ns=S0_IDLE;
     endcase
 
-always @(posedge clk or negedge rst)            //计数器模块
-    if (!rst)
+always @(posedge clk or negedge rstn)            //计数器模块
+    if (!rstn)
         cnt_t0_0<=0;
     else if (target_0)
         cnt_t0_0<=0;
     else if (en_0 && s0_cs==S0_R_M)
         cnt_t0_0<=cnt_t0_0+1;
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         cnt_t0_1<=0;
     else if (target_1)
         cnt_t0_1<=0;
     else if (en_1 && s0_cs==S0_R_M)
         cnt_t0_1<=cnt_t0_1+1;
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         cnt_t0_2<=0;
     else if (target_2)
         cnt_t0_2<=0;
     else if (en_2 && s0_cs==S0_R_M)
         cnt_t0_2<=cnt_t0_2+1;
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         cnt_t0_3<=0;
     else if (target_3)
         cnt_t0_3<=0;
     else if (en_3 && s0_cs==S0_R_M)
         cnt_t0_3<=cnt_t0_3+1;
 
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         t0_cnt<={(TRANS_W){1'b0}};
     else if (s0_cs==S0_IDLE)
         t0_cnt<={(TRANS_W){1'b0}};
@@ -241,23 +241,23 @@ always @(posedge clk or negedge rst)
 assign t0_mt_done=t0_cnt==0 && s0_cs==S0_WAIT_R;
 
 //for ch_*_t0_done
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         ch_0_t0_done<=0;
     else if (en_0 && target_0==0 && cnt_t0_0==ch_0_size)
         ch_0_t0_done<=1;
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         ch_1_t0_done<=0;
     else if (en_1 && target_1==0 && cnt_t0_1==ch_1_size)
         ch_1_t0_done<=1;
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         ch_2_t0_done<=0;
     else if (en_2 && target_2==0 && cnt_t0_2==ch_2_size)
         ch_2_t0_done<=1;
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         ch_3_t0_done<=0;
     else if (en_3 && target_3==0 && cnt_t0_3==ch_3_size)
         ch_3_t0_done<=1;
@@ -265,15 +265,15 @@ always @(posedge clk or negedge rst)
 assign t0_done=ch_0_t0_done | ch_1_t0_done | ch_2_t0_done | ch_3_t0_done;
 
 //for t0_rd and t0_wr
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         t0_wr<=0;
     else if (s0_cs==S0_W_P)
         t0_wr<=1;
     else 
         t0_wr<=0;
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         t0_rd<=0;
     else if (s0_cs==S0_R_M)
         t0_rd<=1;
@@ -281,29 +281,29 @@ always @(posedge clk or negedge rst)
         t0_rd<=0;
 
 //for rd_addr_*
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         rd_addr_0<=0;
     else if (en_0 && cnt_t0_0==0)
         rd_addr_0<=ch_0_sour;
     else if (en_0 && s0_cs==S0_R_M)
         rd_addr_0<=rd_addr_0+4;
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         rd_addr_1<=0;
     else if (en_1 && cnt_t0_1==0)
         rd_addr_1<=ch_1_sour;
     else if (en_1 && s0_cs==S0_R_M)
         rd_addr_1<=rd_addr_1+4;
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         rd_addr_2<=0;
     else if (en_2 && cnt_t0_2==0)
         rd_addr_2<=ch_2_sour;
     else if (en_2 && s0_cs==S0_R_M)
         rd_addr_2<=rd_addr_2+4;
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         rd_addr_3<=0;
     else if (en_3 && cnt_t0_3==0)
         rd_addr_3<=ch_3_sour;
@@ -344,8 +344,8 @@ assign peri_t1_req =(req_0 && ch0_t1_en && fifo_0_full==0) ||
                                                                   
 assign mem_t1_req=ch0_t1_en | ch1_t1_en | ch2_t1_en | ch3_t1_en; //
                                                                       
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         s1_cs<=S1_IDLE;
     else 
         s1_cs<=s1_ns;
@@ -376,23 +376,23 @@ always @(*)
         default : s1_ns=S1_IDLE;
     endcase 
 //for t1_wr and t1_rd
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         t1_wr<=0;
     else if (s1_cs==S1_W_M)
         t1_wr<=1;
     else 
         t1_wr<=0;
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         t1_rd<=0;
     else if (s1_cs==S1_R_P)
         t1_rd<=1;
     else 
         t1_rd<=0;
 
-always @(posedge clk or negedge rst)
-    if (!rst) begin
+always @(posedge clk or negedge rstn)
+    if (!rstn) begin
         en_0_d<=0;
         en_1_d<=0;
         en_2_d<=0;
@@ -410,50 +410,50 @@ assign en_1_r=en_1 && (~en_1_d);
 assign en_2_r=en_2 && (~en_2_d);
 assign en_3_r=en_3 && (~en_3_d);
 
-always @(posedge clk or negedge rst)
-    if (!rst) 
+always @(posedge clk or negedge rstn)
+    if (!rstn) 
         en_0_r_d<=0;
     else if (en_0_r)
         en_0_r_d<=1;
-always @(posedge clk or negedge rst)
-    if (!rst) 
+always @(posedge clk or negedge rstn)
+    if (!rstn) 
         en_1_r_d<=0;
     else if (en_1_r)
         en_1_r_d<=1;
-always @(posedge clk or negedge rst)
-    if (!rst) 
+always @(posedge clk or negedge rstn)
+    if (!rstn) 
         en_2_r_d<=0;
     else if (en_2_r)
         en_2_r_d<=1;
-always @(posedge clk or negedge rst)
-    if (!rst) 
+always @(posedge clk or negedge rstn)
+    if (!rstn) 
         en_3_r_d<=0;
     else if (en_3_r)
         en_3_r_d<=1;
 
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         rd_addr_t1_0<=0;
     else if (en_0_r && (en_0_r_d==0) && (target_0==1) )
         rd_addr_t1_0<=ch_0_dest;
     else if (en_0 && s1_cs==S1_WAIT_W)
         rd_addr_t1_0<=rd_addr_t1_0+4;
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         rd_addr_t1_1<=0;
     else if (en_1_r && (en_1_r_d==0) && (target_1==1) )
         rd_addr_t1_1<=ch_1_dest;
     else if (en_1 && s1_cs==S1_WAIT_W)
         rd_addr_t1_1<=rd_addr_t1_1+4;
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         rd_addr_t1_2<=0;
     else if (en_2_r && (en_2_r_d==0) && (target_2==1) )
         rd_addr_t1_2<=ch_2_dest;
     else if (en_2 && s1_cs==S1_WAIT_W)
         rd_addr_t1_2<=rd_addr_t1_2+4;
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         rd_addr_t1_3<=0;
     else if (en_3_r && (en_3_r_d==0) && (target_3==1) )
         rd_addr_t1_3<=ch_3_dest;

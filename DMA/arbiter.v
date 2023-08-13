@@ -1,6 +1,6 @@
 module arbiter(
     input clk,
-    input rst,
+    input rstn,
     input req_0,
     input req_1,
     input req_2,
@@ -53,8 +53,8 @@ parameter W_3  =9'b100000000;
 reg [8:0]cs;
 reg [8:0]ns;
 
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         cs<=IDLE;
     else 
         cs<=ns;
@@ -82,7 +82,7 @@ always @(*)
             else if (ch_3_en && (~ch_3_t0_done) && (~target_3))
                 ns=ST_3;
 
-            else if (ch_0_en && (~fifo_0_empty) && (target_0))       //t1方向 fifo非空   不理解
+            else if (ch_0_en && (~fifo_0_empty) && (target_0))       //t1方向 fifo非空
                 ns=ST_0;
                 // ns= W_0;
             else if (ch_1_en && (~fifo_1_empty) && (target_1))
@@ -179,58 +179,58 @@ always @(*)
             ns=IDLE;
     endcase
 
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         en_0<=0;
     else if (ns==W_0)       //通道工作状态时使能 ns == W_x
         en_0<=1;
     else 
         en_0<=0;
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         en_1<=0;
     else if (ns==W_1)
         en_1<=1;
     else 
         en_1<=0;
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         en_2<=0;
     else if (ns==W_2)
         en_2<=1;
     else 
         en_2<=0;
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         en_3<=0;
     else if (ns==W_3)
         en_3<=1;
     else 
         en_3<=0;
 
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         ack_0<=0;
     else if (cs==W_0  && req_done && req_0)      //通道处理完成时产生ack应答
         ack_0<=1;
     else 
         ack_0<=0;
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         ack_1<=0;
     else if (cs==W_1  && req_done && req_1)
         ack_1<=1;
     else 
         ack_1<=0;
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         ack_2<=0;
     else if (cs==W_2  && req_done && req_2)
         ack_2<=1;
     else 
         ack_2<=0; 
-always @(posedge clk or negedge rst)
-    if (!rst)
+always @(posedge clk or negedge rstn)
+    if (!rstn)
         ack_3<=0;
     else if (cs==W_3  && req_done && req_3)
         ack_3<=1;

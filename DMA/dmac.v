@@ -1,4 +1,5 @@
-`timescale 1ns/10ps
+`timescale 1ns/1ps
+
 module dmac(
 
 input             HCLK,
@@ -101,7 +102,7 @@ interface dmac_intface(
 ahb_ctrl dmac_ahb_ctrl(
 
 .clk       (HCLK     ),
-.rst       (HRESETn  ),
+.rstn       (HRESETn  ),
 .wr        (wr       ),
 .rd        (rd       ),
 .addr      (addr     ),
@@ -124,7 +125,7 @@ ahb_ctrl dmac_ahb_ctrl(
 channel_ctrl dmac_channel_ctrl(
 
 .clk            (HCLK   )       ,
-.rst            (HRESETn)       ,
+.rstn            (HRESETn)       ,
 .req_0          (req_0   )      ,
 .req_1          (req_1   )      ,
 .req_2          (req_2   )      ,
@@ -191,7 +192,7 @@ channel_ctrl dmac_channel_ctrl(
 arbiter dmac_arbiter(
 
 .clk          (HCLK         ),
-.rst          (HRESETn      ),
+.rstn          (HRESETn      ),
 .req_0        (req_0       ),
 .req_1        (req_1       ),
 .req_2        (req_2       ),
@@ -230,7 +231,7 @@ arbiter dmac_arbiter(
 
 channel dmac_channel(
 .    clk (HCLK   )             ,
-.    rst (HRESETn)             ,
+.    rstn (HRESETn)             ,
 .  clr_0 (1'b0)                ,
 .   wr_0 (     wr_fifo_0)      ,
 .   rd_0 (     rd_fifo_0)      ,
