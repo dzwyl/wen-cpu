@@ -11,7 +11,7 @@ module channel_ctrl(
 
     output wr,
     output rd,
-    output [31:0] addr,
+    output [31:0] addr,     //
     output [31:0] wdata,
     input  [31:0] rdata,
     input         rd_en,
@@ -240,7 +240,7 @@ always @(posedge clk or negedge rstn)
 
 assign t0_mt_done=t0_cnt==0 && s0_cs==S0_WAIT_R;
 
-//for ch_*_t0_done
+//for ch_x_t0_done
 always @(posedge clk or negedge rstn)
     if (!rstn)
         ch_0_t0_done<=0;

@@ -64,7 +64,6 @@ always @(*)
         IDLE:begin
             if (req_0 && (~ack_0))
                 ns=ST_0;
-                //  ns= W_0;
             else if (req_1 && (~ack_1))
                 ns=ST_1;
             else if (req_2 && (~ack_2))
@@ -72,9 +71,8 @@ always @(*)
             else if (req_3 && (~ack_3))
                 ns=ST_3;
 
-            else if (ch_0_en && (~ch_0_t0_done) && (~target_0))     //无req请求时检查是否有t0方向未完成的传输
+            else if (ch_0_en && (~ch_0_t0_done) && (~target_0))     //无req请求时检查是否有t0方向未完成的传输，target=0为memory到外设
                 ns=ST_0;
-                //  ns= W_0;
             else if (ch_1_en && (~ch_1_t0_done) && (~target_1))
                 ns=ST_1;
             else if (ch_2_en && (~ch_2_t0_done) && (~target_2))
@@ -84,7 +82,6 @@ always @(*)
 
             else if (ch_0_en && (~fifo_0_empty) && (target_0))       //t1方向 fifo非空
                 ns=ST_0;
-                // ns= W_0;
             else if (ch_1_en && (~fifo_1_empty) && (target_1))
                 ns=ST_1;
             else if (ch_2_en && (~fifo_2_empty) && (target_2))
