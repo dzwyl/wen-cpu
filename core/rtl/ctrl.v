@@ -1,4 +1,4 @@
-`timescale 1ns/1ps
+`timescale 1ns / 1ps
 
 module ctrl(
     input               rstn,
@@ -24,7 +24,7 @@ always  @(negedge rstn or opcode)   begin
     end
     else    begin
         case(opcode)
-            7'b0110011:begin
+            7'b0110011:begin            //R
                 branch      <=  1'b0;
                 mem_read    <=  1'b0;
                 mem_to_reg  <=  1'b0;
@@ -33,7 +33,7 @@ always  @(negedge rstn or opcode)   begin
                 alu_src     <=  1'b0;
                 reg_write   <=  1'b1;
             end
-            7'b0000011:begin
+            7'b0000011:begin            //ld
                 branch      <=  1'b0;
                 mem_read    <=  1'b1;
                 mem_to_reg  <=  1'b1;
@@ -42,7 +42,7 @@ always  @(negedge rstn or opcode)   begin
                 alu_src     <=  1'b1;
                 reg_write   <=  1'b1;
             end
-            7'b0100011:begin
+            7'b0100011:begin            //sd
                 branch      <=  1'b0;
                 mem_read    <=  1'b0;
                 mem_to_reg  <=  1'b0;
@@ -51,7 +51,7 @@ always  @(negedge rstn or opcode)   begin
                 alu_src     <=  1'b1;
                 reg_write   <=  1'b0;
             end
-            7'b0010011:begin
+            7'b0010011:begin            //addi
                 branch      <=  1'b0;
                 mem_read    <=  1'b0;
                 mem_to_reg  <=  1'b0;
@@ -60,7 +60,7 @@ always  @(negedge rstn or opcode)   begin
                 alu_src     <=  1'b1;
                 reg_write   <=  1'b1;
             end
-            7'b1100011:begin
+            7'b1100011:begin            //beq
                 branch      <=  1'b1;
                 mem_read    <=  1'b0;
                 mem_to_reg  <=  1'b0;

@@ -1,4 +1,4 @@
-`timescale 1ns/1ps
+`timescale 1ns / 1ps
 
 module core(
     input   clk,
@@ -7,8 +7,8 @@ module core(
 
 reg     [9:0]   pc;
 wire    [9:0]   pc_next;
-wire            pc_inc;
-wire    [9:0]   pc_sel;
+wire    [9:0]   pc_inc;
+wire            pc_sel;
 wire    [9:0]   pc_target;
 wire    [31:0]  inst;
 wire    [63:0]  inst64;
@@ -39,7 +39,7 @@ reg     [3:0]   phase   =   4'd0;
 reg             PC_load;
 reg             IR_load;
 
-assign  pc_inc  =   pc + 1;
+assign  pc_inc  =   pc + 1;                                 //+4 bit
 assign  pc_sel  =   branch  &   zero;
 assign  pc_target   =   pc  +   {inst64[8:0],1'b0};
 assign  pc_next =   pc_sel  ?   pc_target   :   pc_inc;
@@ -131,7 +131,7 @@ reg_file    u_reg_file(
 );
 
 imm_gen u_imm_gen(
-    .inst(inst_reg),
+    .inst32(inst_reg),
     .inst64(inst64)
 );
 

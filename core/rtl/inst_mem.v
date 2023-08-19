@@ -1,4 +1,4 @@
-`timescale 1ns/1ps
+`timescale 1ns / 1ps
 
 module inst_mem(
     input             clk,
@@ -8,7 +8,7 @@ module inst_mem(
 
 dpram #(
     .WIDTH(32),
-    .DEPTH(256)
+    .DEPTH(1024)
 )   u_inst_dpram(
     .clk(clk),
     .wen(1'b0),

@@ -22,7 +22,7 @@ always @(posedge clk) begin
     end
 end
 
-always  @(posedge clk or negedge rstn)    begin
+always  @(posedge clk)    begin
     if(!rstn)   begin
         r_data1 <=  'd0;
         r_data2 <=  'd0;

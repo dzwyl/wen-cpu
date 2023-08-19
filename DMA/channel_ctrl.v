@@ -287,7 +287,7 @@ always @(posedge clk or negedge rstn)
     else if (en_0 && cnt_t0_0==0)
         rd_addr_0<=ch_0_sour;
     else if (en_0 && s0_cs==S0_R_M)
-        rd_addr_0<=rd_addr_0+4;
+        rd_addr_0<=rd_addr_0+4;             //8bit x 4
 always @(posedge clk or negedge rstn)
     if (!rstn)
         rd_addr_1<=0;
@@ -314,12 +314,12 @@ always @(posedge clk or negedge rstn)
 assign t0_rm_addr=(en_0)?rd_addr_0:
                   (en_1)?rd_addr_1:
                   (en_2)?rd_addr_2:
-                  (en_3)?rd_addr_3:0;
+                  (en_3)?rd_addr_3:'d0;
 
 assign t0_wp_addr=(en_0)?ch_0_dest:
                   (en_1)?ch_1_dest:
                   (en_2)?ch_2_dest:
-                  (en_3)?ch_3_dest:0;
+                  (en_3)?ch_3_dest:'d0;
 
 //logic of direction 1 
 reg [5:0] s1_cs;
